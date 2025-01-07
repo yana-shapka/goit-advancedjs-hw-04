@@ -1,11 +1,22 @@
-export const fetchPhotosByQuery = searchQuery => {
-  return fetch(
-    `https://pixabay.com/api/?key=47683521-7bc13f64e806eb93b38e1f294&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true`
-  ).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
+import axios from 'axios';
 
-    return response.json();
-  });
+axios.defaults.baseURL = 'https://pixabay.com/api';
+
+export const fetchPhotosByQuery = async searchQuery => {
+  const requestParams = {
+    q: searchQuery,
+    key: '47683521-7bc13f64e806eb93b38e1f294',
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: 'true',
+    per_page: 15,
+  };
+
+  try {
+    const response = await axios.get('/', { params: requestParams });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching data from Pixabay:', error);
+    throw error;
+  }
 };
