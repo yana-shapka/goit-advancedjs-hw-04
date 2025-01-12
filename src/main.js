@@ -26,6 +26,7 @@ const clearGallery = () => {
 
 const loadImages = async () => {
   try {
+    loadMoreBtnEl.classList.add('is-hidden');
     const response = await fetchPhotosByQuery(inputValue, page);
 
     if (response.totalHits === 0) {
